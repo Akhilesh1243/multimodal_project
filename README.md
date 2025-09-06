@@ -31,9 +31,8 @@ multimodal_project/
 
 ---
 
-## Setup (Windows / PowerShell)
-```powershell
-# from project root
+## Code and Beginner theory and Result
+from project root
 python -m venv ml_env
 .\ml_env\Scripts\activate
 pip install -r requirements.txt
@@ -65,39 +64,37 @@ We concatenate → MLP → 2 logits (not hateful / hateful).
 
 Training uses CrossEntropyLoss on logits (softmax is implicit in the loss).
 
-
-
 ### Beginner Theory (short & clear)
-
-Tokens: tiny chunks of text (words/subwords/punctuation). Tokenizer turns them into IDs.
-
-Attention mask: marks real tokens vs padding (1 = keep, 0 = ignore).
-
-Tensors: containers for numbers (vectors/matrices/higher-dim arrays).
-
-DistilBERT (text): builds context-aware vectors via self-attention → 768-dim summary.
-
-ResNet50 (image): CNN features → global average pool → 2048-dim vector.
-
-Fusion: concat (768+2048=2816), MLP with ReLU & Dropout, then logits → softmax probabilities.
-
-Training: Cross-Entropy + AdamW optimizer + linear scheduler + gradient clipping.
-
-Inference: no gradients; forward pass, softmax, choose class (or apply a tuned threshold).
-
-Shapes cheat-sheet (batch = B, tokens = L)
-
-Text in: (B, L) IDs + mask → DistilBERT → (B, L, 768) → take index 0 → (B, 768)
-
-Image in: (B, 3, H, W) → ResNet50 → (B, 2048)
-
-Fusion: concat → (B, 2816) → MLP → logits (B, 2)
+**--
+  Tokens: tiny chunks of text (words/subwords/punctuation). Tokenizer turns them into IDs.
+  
+  Attention mask: marks real tokens vs padding (1 = keep, 0 = ignore).
+  
+  Tensors: containers for numbers (vectors/matrices/higher-dim arrays).
+  
+  DistilBERT (text): builds context-aware vectors via self-attention → 768-dim summary.
+  
+  ResNet50 (image): CNN features → global average pool → 2048-dim vector.
+  
+  Fusion: concat (768+2048=2816), MLP with ReLU & Dropout, then logits → softmax probabilities.
+  
+  Training: Cross-Entropy + AdamW optimizer + linear scheduler + gradient clipping.
+  
+  Inference: no gradients; forward pass, softmax, choose class (or apply a tuned threshold).
+  
+  Shapes cheat-sheet (batch = B, tokens = L)
+  
+  Text in: (B, L) IDs + mask → DistilBERT → (B, L, 768) → take index 0 → (B, 768)
+  
+  Image in: (B, 3, H, W) → ResNet50 → (B, 2048)
+  
+  Fusion: concat → (B, 2816) → MLP → logits (B, 2)
 
 
 ## Current Results (baseline)
 
-Val accuracy: 0.566
-
-Val macro-F1: 0.502
-
-Confusion matrix shows low recall for hateful (class 1).
+  Val accuracy: 0.566
+  
+  Val macro-F1: 0.502
+  
+  Confusion matrix shows low recall for hateful (class 1).
